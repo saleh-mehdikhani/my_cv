@@ -4,6 +4,9 @@
 
 [build.environment]
   HUGO_VERSION = "0.152.2"
+  GIT_LFS_ENABLED = "true"
+  # Force submodule update
+  NETLIFY_USE_YARN = "false"
 
 [context.production.environment]
   HUGO_ENV = "production"
