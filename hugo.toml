@@ -1,0 +1,30 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'My Resume'
+theme = 'hugo-coder'
+
+[params]
+  author = "Saleh Mehdikhani"
+  info = "Embedded Software Engineer"
+  description = "Personal website and resume"
+  keywords = "blog,developer,resume"
+  avatarurl = "images/saleh_cv.jpg"
+
+  favicon_32 = "/img/favicon-32x32.png"
+  favicon_16 = "/img/favicon-16x16.png"
+
+  footercontent = "Enter a link to your social media profiles here."
+
+  hideCredits = false
+  hideCopyright = false
+
+  rtl = false
+
+  math = true
+  custom_css = []
+
+  social = [
+    { name = "Github", icon = "fa fa-github fa-2x", weight = 1, url = "https://github.com/saleh-mehdikhani"},
+    { name = "LinkedIn", icon = "fa fa-linkedin fa-2x", weight = 2, url = "https://www.linkedin.com/in/saleh-mehdikhani/"},
+    { name = "Email", icon = "fa fa-envelope fa-2x", weight = 3, url = "mailto:"},
+  ]
