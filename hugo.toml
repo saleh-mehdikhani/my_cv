@@ -37,12 +37,6 @@ defaultContentLanguage = "en"
   weight = 2
   url = "https://www.linkedin.com/in/saleh-mehdikhani/"
 
-[[params.social]]
-  name = "Email"
-  icon = "fa-solid fa-envelope fa-2x"
-  weight = 3
-  url = "mailto:"
-
 [languages.en]
   languageName = "English"
 
