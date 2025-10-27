@@ -1,14 +1,16 @@
 baseURL = 'https://example.org/'
 languageCode = 'en-us'
-title = 'My Resume'
+title = 'Saleh Mehdikhani'
 theme = 'hugo-coder'
+defaultContentLanguage = "en"
 
 [params]
   author = "Saleh Mehdikhani"
-  info = "Embedded Software Engineer"
+  info = ["Embedded Software Engineer"]
   description = "Personal website and resume"
   keywords = "blog,developer,resume"
-  avatarurl = "images/saleh_cv.jpeg"
+  avatarURL = "images/saleh_cv.jpeg"
+  dateFormat = "January 2, 2006"
 
   favicon_32 = "/img/favicon-32x32.png"
   favicon_16 = "/img/favicon-16x16.png"
@@ -21,10 +23,40 @@ theme = 'hugo-coder'
   rtl = false
 
   math = true
-  custom_css = []
+  customCSS = []
 
-  social = [
-    { name = "Github", icon = "fa fa-github fa-2x", weight = 1, url = "https://github.com/saleh-mehdikhani"},
-    { name = "LinkedIn", icon = "fa fa-linkedin fa-2x", weight = 2, url = "https://www.linkedin.com/in/saleh-mehdikhani/"},
-    { name = "Email", icon = "fa fa-envelope fa-2x", weight = 3, url = "mailto:"},
-  ]
+[[params.social]]
+  name = "Github"
+  icon = "fa-brands fa-github fa-2x"
+  weight = 1
+  url = "https://github.com/saleh-mehdikhani"
+
+[[params.social]]
+  name = "LinkedIn"
+  icon = "fa-brands fa-linkedin fa-2x"
+  weight = 2
+  url = "https://www.linkedin.com/in/saleh-mehdikhani/"
+
+[[params.social]]
+  name = "Email"
+  icon = "fa-solid fa-envelope fa-2x"
+  weight = 3
+  url = "mailto:"
+
+[languages.en]
+  languageName = "English"
+
+[[languages.en.menu.main]]
+  name = "About"
+  weight = 1
+  url = "about/"
+
+[[languages.en.menu.main]]
+  name = "Projects"
+  weight = 2
+  url = "projects/"
+
+[[languages.en.menu.main]]
+  name = "Contact"
+  weight = 3
+  url = "contact/"
