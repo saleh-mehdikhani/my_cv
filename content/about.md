@@ -13,8 +13,8 @@ I am a senior System Software Developer with 15+ years of experience in embedded
 - **Embedded Systems:** Low-Power Design, Real-Time Systems, Edge AI
 - **Protocols:** MQTT, RESTful API, CBOR, BLE, WiFi, UART, SPI, I²C, CAN, GPIO
 - **Platforms:** Silabs, Nordic, onsemi, TI, ST, Espressif, Atmel
-- **Software Tools:**: Git, Github CI, CMake, Bazel, SCons, GNU Make
-- **Hardware Tools:**: Logic Analyzer, Oscilloscope, Multimeter, Soldering, Power Analyzer
+- **Software Tools:** Git, Github CI, CMake, Bazel, SCons, GNU Make
+- **Hardware Tools:** Logic Analyzer, Oscilloscope, Multimeter, Soldering, Power Analyzer
 
 ---
 
