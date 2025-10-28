@@ -66,7 +66,11 @@ class MarkdownToJsonConverter:
             block_content = block.group(1)
             profile = {}
             if match := re.search(r'name\s*=\s*["\']([^"\']+)["\']', block_content):
-                profile['network'] = match.group(1)
+                network_name = match.group(1)
+                # Exclude 'Github' profile
+                if network_name.lower() == 'github':
+                    continue
+                profile['network'] = network_name
             if match := re.search(r'url\s*=\s*["\']([^"\']+)["\']', block_content):
                 url = match.group(1)
                 profile['url'] = url
