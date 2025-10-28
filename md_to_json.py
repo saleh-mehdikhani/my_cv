@@ -458,8 +458,7 @@ class MarkdownToJsonConverter:
             "name": config_data.get('name', 'Saleh Mehdikhani'),
             "label": config_data.get('label', 'Senior System Software Developer'),
             "email": contact_info.get('email', ''),
-            "phone": contact_info.get('phone', ''),
-            "url": config_data.get('url', ''),
+            "phone": "",
             "website": "",
             "summary": "",
             "location": {
