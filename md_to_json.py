@@ -263,7 +263,7 @@ class MarkdownToJsonConverter:
             
             work_entry = {
                 "position": position,
-                "name": company,
+                "company": company,
                 "location": location,
                 "startDate": start_date,
                 "summary": description
