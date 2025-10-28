@@ -1,0 +1,9 @@
+{
+  "name": "hugo_cv",
+  "version": "1.0.0",
+  "description": "CV built with Hugo",
+  "dependencies": {
+    "resume-cli": "^3.0.0",
+    "jsonresume-theme-stackoverflow": "^2.1.0"
+  }
+}

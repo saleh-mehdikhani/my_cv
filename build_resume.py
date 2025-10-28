@@ -71,103 +71,7 @@ class ResumeBuilder:
             print(f"✗ Unexpected error: {e}")
             return False
     
-    def check_node_installed(self) -> bool:
-        """Check if Node.js is installed"""
-        try:
-            result = subprocess.run(
-                ["node", "--version"],
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            print(f"✓ Node.js is installed: {result.stdout.strip()}")
-            return True
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            print("✗ Node.js is not installed")
-            print("  Please install Node.js from: https://nodejs.org/")
-            return False
     
-    def check_npm_installed(self) -> bool:
-        """Check if npm is installed"""
-        try:
-            result = subprocess.run(
-                ["npm", "--version"],
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            print(f"✓ npm is installed: {result.stdout.strip()}")
-            return True
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            print("✗ npm is not installed")
-            return False
-    
-    def check_resume_cli_installed(self) -> bool:
-        """Check if resume-cli is installed globally"""
-        try:
-            result = subprocess.run(
-                ["resume", "--version"],
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            print(f"✓ resume-cli is installed: {result.stdout.strip()}")
-            return True
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            print("✗ resume-cli is not installed globally")
-            return False
-    
-    def install_resume_cli(self):
-        """Install resume-cli globally"""
-        print("\nInstalling resume-cli globally...")
-        try:
-            subprocess.run(
-                ["npm", "install", "-g", "resume-cli"],
-                check=True
-            )
-            print("✓ resume-cli installed successfully")
-            return True
-        except subprocess.CalledProcessError as e:
-            print(f"✗ Failed to install resume-cli: {e}")
-            print("  You may need to run with sudo: sudo npm install -g resume-cli")
-            return False
-    
-    def install_theme(self):
-        """Install the Stack Overflow theme"""
-        print(f"\nInstalling {self.theme} theme...")
-        try:
-            subprocess.run(
-                ["npm", "install", "-g", f"jsonresume-theme-{self.theme}"],
-                check=True
-            )
-            print(f"✓ Theme '{self.theme}' installed successfully")
-            return True
-        except subprocess.CalledProcessError as e:
-            print(f"✗ Failed to install theme: {e}")
-            return False
-    
-    def setup_dependencies(self):
-        """Setup all required dependencies"""
-        self.print_step(3, "Checking and installing dependencies")
-        
-        # Check Node.js and npm
-        if not self.check_node_installed():
-            return False
-        
-        if not self.check_npm_installed():
-            return False
-        
-        # Check and install resume-cli
-        if not self.check_resume_cli_installed():
-            print("\nresume-cli not found. Installing...")
-            if not self.install_resume_cli():
-                return False
-        
-        # Install theme
-        if not self.install_theme():
-            print("⚠ Theme installation failed, but will try to continue...")
-        
-        return True
     
     def generate_pdf(self):
         """Generate PDF from JSON Resume"""
@@ -176,6 +80,7 @@ class ResumeBuilder:
         try:
             # Use resume export command
             cmd = [
+                "npx",
                 "resume",
                 "export",
                 str(self.pdf_file),
@@ -189,15 +94,26 @@ class ResumeBuilder:
                 cmd,
                 capture_output=True,
                 text=True,
-                check=True
+                check=False  # Don't throw on non-zero exit
             )
             
+            # Always print output for debugging
             if result.stdout:
+                print("--- stdout ---")
                 print(result.stdout)
-            
+            if result.stderr:
+                print("--- stderr ---")
+                print(result.stderr)
+
+            # Check for non-zero exit code first
+            if result.returncode != 0:
+                print(f"✗ PDF generation command failed with exit code {result.returncode}")
+                return False
+
             # Verify PDF was created
             if not self.pdf_file.exists():
-                raise FileNotFoundError(f"PDF file not created: {self.pdf_file}")
+                print(f"✗ Command appeared to succeed, but PDF file was not created at: {self.pdf_file}")
+                return False
             
             # Check file size
             file_size = self.pdf_file.stat().st_size
@@ -209,11 +125,7 @@ class ResumeBuilder:
             
         except subprocess.CalledProcessError as e:
             print(f"✗ Error generating PDF:")
-            print(f"  stdout: {e.stdout}")
-            print(f"  stderr: {e.stderr}")
-            return False
-        except Exception as e:
-            print(f"✗ Unexpected error: {e}")
+            print(f"✗ Error generating PDF.")
             return False
     
     def verify_outputs(self):
@@ -253,10 +165,6 @@ class ResumeBuilder:
             print("\n✗ Build failed at JSON conversion step")
             return False
         
-        # Step 3: Setup dependencies
-        if not self.setup_dependencies():
-            print("\n✗ Build failed at dependency setup step")
-            return False
         
         # Step 4: Generate PDF
         if not self.generate_pdf():
