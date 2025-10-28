@@ -416,7 +416,6 @@ class MarkdownToJsonConverter:
             
             project_entry = {
                 "name": name,
-                "description": description_text,
                 "summary": description_text,
                 "highlights": highlights,
                 "keywords": tech_list,
