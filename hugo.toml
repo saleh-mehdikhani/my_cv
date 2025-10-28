@@ -7,7 +7,7 @@ defaultContentLanguage = "en"
 [params]
   author = "Saleh Mehdikhani"
   info = ["Embedded Software Engineer"]
-  description = "Personal website and resume"
+  description = "This is about Saleh"
   keywords = "blog,developer,resume"
   avatarURL = "images/saleh_cv.jpeg"
   dateFormat = "January 2, 2006"
