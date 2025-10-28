@@ -370,8 +370,8 @@ class MarkdownToJsonConverter:
         _, body = self.parse_front_matter(content)
         
         # Parse each project section
-        project_pattern = r'##\s+([^\n]+)\n\*\*Technologies:\*\*\s*([^\n]+)\n\n\*\*Descri[pt]tions?:\*\*\s*([^\n]+(?:\n(?!##|---)[^\n]+)*)'
-        projects_matches = re.finditer(project_pattern, body, re.MULTILINE)
+        project_pattern = r'##\s+([^\n]+)\n\*\*Technologies:\*\*\s*([^\n]+)\n\n\*\*Descri[pt]tions?:\*\*\s*((?:.|\n)*?(?=\n##|\n---|\Z))'
+        projects_matches = re.finditer(project_pattern, body)
         
         for match in projects_matches:
             title_line = match.group(1).strip()
@@ -403,13 +403,22 @@ class MarkdownToJsonConverter:
             clean_desc = re.sub(r'\*\*([^*]+)\*\*', r'\1', clean_desc)
             clean_desc = clean_desc.strip()
 
-            # Create highlights from sentences in the description
+            # Separate a main description from a bulleted list
+            description_text = ""
             highlights = []
-
+            
+            if "\n-" in clean_desc:
+                parts = clean_desc.split("\n-")
+                description_text = parts[0].strip()
+                highlights = [item.strip().lstrip('* ').rstrip() for item in parts[1:]]
+            else:
+                description_text = clean_desc
+            
             project_entry = {
                 "name": name,
-                "summary": clean_desc,
-                "highlights": [],
+                "description": description_text,
+                "summary": description_text,
+                "highlights": highlights,
                 "keywords": tech_list,
                 "startDate": "",
                 "endDate": "",
