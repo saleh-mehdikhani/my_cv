@@ -68,7 +68,12 @@ class MarkdownToJsonConverter:
             if match := re.search(r'name\s*=\s*["\']([^"\']+)["\']', block_content):
                 profile['network'] = match.group(1)
             if match := re.search(r'url\s*=\s*["\']([^"\']+)["\']', block_content):
-                profile['url'] = match.group(1)
+                url = match.group(1)
+                profile['url'] = url
+                # Extract username from URL
+                if 'github.com' in url or 'linkedin.com' in url:
+                    profile['username'] = url.strip('/').split('/')[-1]
+
             if profile:
                 profiles.append(profile)
         
@@ -136,6 +141,10 @@ class MarkdownToJsonConverter:
             # Extract country
             if match := re.search(r'\*\*Country:\*\*\s*(\w+)', content):
                 contact_info['country'] = match.group(1)
+
+            # Extract website from other.md
+            if match := re.search(r'\*\*Website:\*\*\s*(https?://[^\s]+)', content):
+                contact_info['website'] = match.group(1)
         
         return contact_info
     
@@ -447,6 +456,7 @@ class MarkdownToJsonConverter:
             "email": contact_info.get('email', ''),
             "phone": contact_info.get('phone', ''),
             "url": config_data.get('url', ''),
+            "website": "",
             "summary": "",
             "location": {
                 "city": contact_info.get('city', ''),
@@ -455,6 +465,15 @@ class MarkdownToJsonConverter:
             },
             "profiles": config_data.get('profiles', [])
         }
+
+        # Add website to profiles with 'wordpress' icon
+        if contact_info.get('website'):
+            website_profile = {
+                "network": "wordpress",
+                "username": contact_info.get('website').split('//')[-1],
+                "url": contact_info.get('website')
+            }
+            self.resume_data["basics"]["profiles"].append(website_profile)
         
         # Add LinkedIn to profiles if found in contact info
         if contact_info.get('linkedin'):
