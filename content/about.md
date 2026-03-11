@@ -2,7 +2,7 @@
 title = "About"
 +++
 
-I am a senior System Software Developer with 15+ years of experience in embedded systems and IoT. I build reliable, efficient, and maintainable firmware and system software, combining hands-on engineering with a product-minded approach. Throughout my career, I have delivered solutions from prototype to production, contributing both technically and strategically to the success of multiple products.
+Senior System Software Developer with 15+ years of experience in embedded systems and IoT. While tools and languages evolve rapidly, my core strength is problem solving: understanding real-world constraints, working with stakeholders and users, and translating those insights into reliable firmware and system software. I have delivered multiple products from prototype to production by combining deep engineering expertise with a practical, product-focused mindset.
 
 ---
 
