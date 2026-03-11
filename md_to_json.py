@@ -275,8 +275,8 @@ class MarkdownToJsonConverter:
             start_date, end_date = self.parse_date(dates)
             
             work_entry = {
+                "name": company,       # JSON Resume schema uses 'name', not 'company'
                 "position": position,
-                "company": company,
                 "location": location,
                 "startDate": start_date,
                 "summary": description
@@ -382,8 +382,8 @@ class MarkdownToJsonConverter:
         content = projects_file.read_text(encoding='utf-8')
         _, body = self.parse_front_matter(content)
         
-        # Parse each project section
-        project_pattern = r'##\s+([^\n]+)\n\*\*Technologies:\*\*\s*([^\n]+)\n\n\*\*Descri[pt]tions?:\*\*\s*((?:.|\n)*?(?=\n##|\n---|\Z))'
+        # Allow optional blank line between Technologies and Description lines
+        project_pattern = r'##\s+([^\n]+)\n\*\*Technologies:\*\*\s*([^\n]+)\n\n?\*\*Descri[pt]tions?:\*\*\s*((?:.|\n)*?(?=\n##|\n---|\Z))'
         projects_matches = re.finditer(project_pattern, body)
         
         for match in projects_matches:
