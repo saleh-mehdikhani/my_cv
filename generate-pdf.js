@@ -30,8 +30,11 @@ async function generatePDF() {
 
   // Load theme and render HTML
   const theme = require(themePath);
-  const html = theme.render(resume);
+  let html = theme.render(resume);
   const pdfOptions = theme.pdfRenderOptions || {};
+
+  // Fix paragraphSplit double-wrapping: <p><p>text</p></p> → <p>text</p>
+  html = html.replace(/<p>(<p>[\s\S]*?<\/p>)<\/p>/g, '$1');
 
   console.log('✓ HTML rendered from theme');
 
@@ -44,6 +47,33 @@ async function generatePDF() {
   try {
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: 'networkidle0' });
+
+    // Handlebars has a scope bug in the projects partial: {{#if summary}} inside
+    // the .item div evaluates to false even though summary is non-empty. This is
+    // a known issue with context restoration after certain block helpers.
+    // Fix: inject project summaries directly into the DOM, bypassing Handlebars.
+    await page.evaluate((projects) => {
+      const projectItems = document.querySelectorAll('.project-item');
+      projects.forEach((project, index) => {
+        if (project.summary && projectItems[index]) {
+          const itemDiv = projectItems[index].querySelector('.item');
+          if (itemDiv) {
+            // Create a summary div with the description text
+            const summaryDiv = document.createElement('div');
+            summaryDiv.className = 'summary';
+            summaryDiv.style.marginBottom = '0.4em';
+            summaryDiv.textContent = project.summary;
+            // Insert before highlights if present, otherwise append
+            const highlightsList = itemDiv.querySelector('.highlights');
+            if (highlightsList) {
+              itemDiv.insertBefore(summaryDiv, highlightsList);
+            } else {
+              itemDiv.appendChild(summaryDiv);
+            }
+          }
+        }
+      });
+    }, resume.projects);
 
     await page.pdf({
       path: outputPath,
