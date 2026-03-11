@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Chrome dependencies
+      - name: Install system dependencies for Puppeteer/Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -51,35 +51,8 @@ jobs:
       - name: Install npm dependencies
         run: npm install
 
-      - name: Set Puppeteer environment
-        run: echo "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false" >> $GITHUB_ENV
-
-      - name: Run build script with no-sandbox
-        run: |
-          # Create a wrapper script for Chrome that adds --no-sandbox
-          mkdir -p /tmp/chrome-wrapper
-          cat > /tmp/chrome-wrapper/chrome << 'EOF'
-          #!/bin/bash
-          exec "$(dirname "$0")/chrome-original" --no-sandbox --disable-setuid-sandbox "$@"
-          EOF
-          chmod +x /tmp/chrome-wrapper/chrome
-          
-          # Find Chrome executable in Puppeteer
-          CHROME_PATH=$(node -e "console.log(require('puppeteer').executablePath())" 2>/dev/null || echo "")
-          
-          if [ -n "$CHROME_PATH" ] && [ -f "$CHROME_PATH" ]; then
-            echo "Found Chrome at: $CHROME_PATH"
-            CHROME_DIR=$(dirname "$CHROME_PATH")
-            mv "$CHROME_PATH" "$CHROME_DIR/chrome-original"
-            cp /tmp/chrome-wrapper/chrome "$CHROME_PATH"
-            chmod +x "$CHROME_PATH"
-            echo "Chrome wrapper installed"
-          else
-            echo "Chrome not found, running without wrapper"
-          fi
-          
-          # Run the build script
-          python3 build_resume.py
+      - name: Run build script
+        run: python3 build_resume.py
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4

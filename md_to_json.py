@@ -515,10 +515,17 @@ class MarkdownToJsonConverter:
         output_file = Path(output_path)
         output_file.parent.mkdir(parents=True, exist_ok=True)
         
-        with output_file.open('w', encoding='utf-8') as f:
-            json.dump(self.resume_data, f, indent=2, ensure_ascii=False)
-        
-        print(f"✓ Resume JSON saved to: {output_file}")
+        try:
+            with output_file.open('w', encoding='utf-8') as f:
+                json.dump(self.resume_data, f, indent=2, ensure_ascii=False)
+            print(f"✓ Resume JSON saved to: {output_file}")
+        except PermissionError as e:
+            print(f"✗ Permission error writing to {output_file}: {e}")
+            print(f"  Tip: Try deleting the '{output_file.parent}' folder or checking file locks on your Mac.")
+            raise
+        except Exception as e:
+            print(f"✗ Error saving JSON: {e}")
+            raise
 
 
 def main():

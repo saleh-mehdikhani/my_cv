@@ -17,7 +17,7 @@ class ResumeBuilder:
         self.build_dir = Path("build")
         self.json_file = self.build_dir / "resume.json"
         self.pdf_file = self.build_dir / "resume.pdf"
-        self.theme = "stackoverflow"
+
     
     def print_header(self, message: str):
         """Print a formatted header"""
@@ -75,28 +75,19 @@ class ResumeBuilder:
     
     def generate_pdf(self):
         """Generate PDF from JSON Resume"""
-        self.print_step(4, "Generating PDF with Stack Overflow theme")
-        
+        self.print_step(4, "Generating PDF with Stack Overflow theme (via Puppeteer)")
+
         try:
-            # Use resume export command
-            cmd = [
-                "npx",
-                "resume",
-                "export",
-                str(self.pdf_file),
-                "--theme", self.theme,
-                "--resume", str(self.json_file)
-            ]
-            
+            cmd = ["node", "generate-pdf.js"]
             print(f"Running: {' '.join(cmd)}")
-            
+
             result = subprocess.run(
                 cmd,
                 capture_output=True,
                 text=True,
-                check=False  # Don't throw on non-zero exit
+                check=False,
             )
-            
+
             # Always print output for debugging
             if result.stdout:
                 print("--- stdout ---")
@@ -114,18 +105,17 @@ class ResumeBuilder:
             if not self.pdf_file.exists():
                 print(f"✗ Command appeared to succeed, but PDF file was not created at: {self.pdf_file}")
                 return False
-            
+
             # Check file size
             file_size = self.pdf_file.stat().st_size
             print(f"✓ PDF generated successfully")
             print(f"  File: {self.pdf_file}")
             print(f"  Size: {file_size:,} bytes ({file_size/1024:.1f} KB)")
-            
+
             return True
-            
-        except subprocess.CalledProcessError as e:
-            print(f"✗ Error generating PDF:")
-            print(f"✗ Error generating PDF.")
+
+        except Exception as e:
+            print(f"✗ Error generating PDF: {e}")
             return False
     
     def verify_outputs(self):
