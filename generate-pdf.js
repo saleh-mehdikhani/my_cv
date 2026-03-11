@@ -57,7 +57,8 @@ async function generatePDF() {
       projects.forEach((project, index) => {
         if (project.summary && projectItems[index]) {
           const itemDiv = projectItems[index].querySelector('.item');
-          if (itemDiv) {
+          // Only inject if a summary doesn't already exist to avoid duplication
+          if (itemDiv && !itemDiv.querySelector('.summary')) {
             // Create a summary div with the description text
             const summaryDiv = document.createElement('div');
             summaryDiv.className = 'summary';

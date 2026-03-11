@@ -412,9 +412,15 @@ class MarkdownToJsonConverter:
                 if plain_urls:
                     url = plain_urls[0]
             
-            # Clean description (remove markdown links and bold markers)
-            clean_desc = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', description)
+            # Clean description:
+            # 1. Remove specific project links (View on..., Demo) as they are handled by the 'url' field
+            clean_desc = re.sub(r'\[(?:View on [^\]]+|Demo)\]\([^)]+\)', '', description)
+            # 2. Remove remaining markdown links but keep text: [Text](URL) -> Text
+            clean_desc = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', clean_desc)
+            # 3. Remove bold markers
             clean_desc = re.sub(r'\*\*([^*]+)\*\*', r'\1', clean_desc)
+            # 4. Clean up any leftover pipes or whitespace from removed links
+            clean_desc = re.sub(r'\s*\|\s*', ' ', clean_desc)
             clean_desc = clean_desc.strip()
 
             # Separate a main description from a bulleted list
