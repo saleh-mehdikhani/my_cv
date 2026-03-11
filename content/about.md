@@ -67,6 +67,30 @@ Served as a teaching assistant for Verilog programming.
 
 ---
 
+## Certificates
+
+### Programming with Google Go Specialization
+**University of California, Irvine**
+*Issued Apr 2024*
+
+### Git: Branches, Merges, and Remotes
+**LinkedIn**
+*Issued Jan 2021*
+
+### C++: Advanced Topics
+**LinkedIn**
+*Issued Jan 2021*
+
+### C++ Templates and the STL
+**LinkedIn**
+*Issued Jan 2021*
+
+### Python Data Base
+**University of Michigan**
+*Issued Jan 2021*
+
+---
+
 ## Contact
 
 Feel free to reach out via the social links on the homepage or through the contact page.

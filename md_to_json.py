@@ -24,6 +24,7 @@ class MarkdownToJsonConverter:
             "projects": [],
             "volunteer": [],
             "awards": [],
+            "certificates": [],
             "publications": [],
             "languages": [],
             "interests": [],
@@ -443,6 +444,54 @@ class MarkdownToJsonConverter:
             projects.append(project_entry)
         
         return projects
+
+    def parse_certificates(self, content: str) -> List[Dict[str, Any]]:
+        """Parse certificates from markdown content"""
+        certificates = []
+        
+        # Find certificates section
+        cert_match = re.search(r'##\s+Certificates\s*\n(.*?)(?=\n##\s+[^#]|\n---|\Z)', content, re.DOTALL)
+        if not cert_match:
+            return certificates
+        
+        cert_content = cert_match.group(1)
+        
+        # Split by ### to get individual certificate entries
+        cert_sections = re.split(r'###\s+', cert_content)
+        
+        for section in cert_sections:
+            if not section.strip():
+                continue
+            
+            lines = [line.strip() for line in section.strip().split('\n') if line.strip()]
+            if not lines:
+                continue
+            
+            name = lines[0]
+            
+            # Parse issuer: **Issuer**
+            issuer = ""
+            if len(lines) > 1:
+                issuer_match = re.search(r'\*\*([^*]+)\*\*', lines[1])
+                if issuer_match:
+                    issuer = issuer_match.group(1).strip()
+            
+            # Parse date: *Issued Month Year*
+            date = ""
+            for line in lines[1:]:
+                if match := re.search(r'\*Issued\s+([^*]+)\*', line):
+                    date_str = match.group(1).strip()
+                    date = self._convert_date(date_str) or ""
+                    break
+            
+            certificates.append({
+                "name": name,
+                "issuer": issuer,
+                "date": date,
+                "url": ""
+            })
+            
+        return certificates
     
     def build_resume(self) -> Dict[str, Any]:
         """Build complete resume JSON from all markdown files"""
@@ -504,6 +553,7 @@ class MarkdownToJsonConverter:
             self.resume_data["skills"] = self.parse_skills(body)
             self.resume_data["work"] = self.parse_work_experience(body)
             self.resume_data["education"] = self.parse_education(body)
+            self.resume_data["certificates"] = self.parse_certificates(body)
         
         # Parse projects
         self.resume_data["projects"] = self.parse_projects()
@@ -547,6 +597,7 @@ def main():
     print(f"  - Work Experience: {len(resume_data['work'])} positions")
     print(f"  - Education: {len(resume_data['education'])} degrees")
     print(f"  - Projects: {len(resume_data['projects'])} projects")
+    print(f"  - Certificates: {len(resume_data['certificates'])} certificates")
 
 
 if __name__ == "__main__":
