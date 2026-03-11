@@ -19,30 +19,44 @@ Senior System Software Developer with 15+ years of experience in embedded system
 
 ## Experience
 
-### Embedded System Developer
+### **Senior Embedded Systems Engineer**  
 **Unikie** – Finland
 (*Sep 2020 – Present*)
 
-Working as a consultant on embedded and IoT projects for global customers across industries, from Finland to the US. Assigned to diverse client projects to complete critical development phases, ensure delivery quality, and integrate seamlessly with existing teams. This role demands rapid learning, adaptability, and a proactive approach to new technologies and environments.
+- Developed **embedded and IoT firmware** for international **automotive, positioning, and AI/ML projects**.  
+- Built **EV firmware platform components** integrating **Bazel and SCons build systems**.  
+- Led firmware development for **BLE AoA indoor positioning systems** with **MQTT IQ streaming**.  
+- Implemented **Edge AI direction-finding on MCU** using **TensorFlow Lite**, demoed at **Embedded World 2025**.  
+- Delivered **BLE AoA firmware examples** for **onsemi RSL15**, published as an **official SDK sample**.  
+- Designed **Zephyr-based multi-threaded AoA firmware** for **nRF52** and contributed **fixes upstream to Zephyr**.  
+- Developed **secure embedded platforms using OpTEE** and improved **CMake build integration**.
 
-### Product Manager / Embedded System Leader / Developer
+
+### **Product Manager / Embedded Systems Lead / Developer**  
 **HooshRavan** – Tehran Province, Iran
 (*May 2015 – May 2019*)
 
-Oversaw the complete lifecycle of multiple IoT products, from concept to production. Managed embedded and application teams, ensuring alignment between technology, product design, and manufacturing.
+- Led **end-to-end IoT product development** from **architecture and firmware design to production**.  
+- Managed **embedded, software, and hardware teams** aligning **engineering and manufacturing goals**.  
+- Designed **embedded architectures for connected devices** and supervised **firmware implementation**.
 
-### Embedded System Developer
+
+### **Embedded Systems Developer**  
 **Hamayeh** – Tehran, Iran
 (*Dec 2011 – Mar 2016*)
 
-Developed embedded systems and PCBs for automation and lighting products. Improved firmware reliability and optimized development processes for faster delivery.
+- Developed **embedded firmware and custom PCBs** for **automation and lighting control systems**.  
+- Implemented **microcontroller-based control systems** with **multiple communication interfaces**.  
+- Improved **firmware reliability and debugging workflows** to accelerate **product development cycles**.
 
-### Founder
+
+### **Founder**  
 **Sepydar** – Tehran Province, Iran
 (*Oct 2009 – Mar 2012*)
 
-Founded a startup focused on modernizing industrial control systems. Designed and deployed controllers that remain operational in industrial environments.
-
+- Founded a startup developing **industrial embedded control systems**.  
+- Designed and deployed **embedded controllers for industrial environments**.  
+- Led **product development and early customer deployments**.
 ---
 
 ## Education
