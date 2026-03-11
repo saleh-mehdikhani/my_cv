@@ -242,7 +242,7 @@ class MarkdownToJsonConverter:
             if len(lines) < 3:
                 continue
             
-            position = lines[0].strip()
+            position = lines[0].strip().strip('*').strip()
             
             # Parse company and location line: **Company** – Location
             company_line = lines[1] if len(lines) > 1 else ""
@@ -315,7 +315,7 @@ class MarkdownToJsonConverter:
             if len(lines) < 3:
                 continue
             
-            degree_info = lines[0].strip()
+            degree_info = lines[0].strip().strip('*').strip()
             
             # Parse institution line: **Institution**
             institution_line = lines[1] if len(lines) > 1 else ""
