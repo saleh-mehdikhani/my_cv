@@ -20,7 +20,7 @@ Senior System Software Developer with 15+ years of experience in embedded system
 ## Experience
 
 ### **Senior Embedded Systems Engineer**  
-**Unikie** – Finland
+**Unikie** – Helsinki
 (*Sep 2020 – Present*)
 
 - Developed **embedded and IoT firmware** for international **automotive, positioning, and AI/ML projects**.  
@@ -33,7 +33,7 @@ Senior System Software Developer with 15+ years of experience in embedded system
 
 
 ### **Product Manager / Embedded Systems Lead / Developer**  
-**HooshRavan** – Tehran Province, Iran
+**HooshRavan** – Tehran
 (*May 2015 – May 2019*)
 
 - Led **end-to-end IoT product development** from **architecture and firmware design to production**.  
@@ -42,7 +42,7 @@ Senior System Software Developer with 15+ years of experience in embedded system
 
 
 ### **Embedded Systems Developer**  
-**Hamayeh** – Tehran, Iran
+**Hamayeh** – Tehran
 (*Dec 2011 – Mar 2016*)
 
 - Developed **embedded firmware and custom PCBs** for **automation and lighting control systems**.  
@@ -51,7 +51,7 @@ Senior System Software Developer with 15+ years of experience in embedded system
 
 
 ### **Founder**  
-**Sepydar** – Tehran Province, Iran
+**Sepydar** – Tehran
 (*Oct 2009 – Mar 2012*)
 
 - Founded a startup developing **industrial embedded control systems**.  
