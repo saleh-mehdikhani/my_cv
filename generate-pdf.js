@@ -76,6 +76,13 @@ async function generatePDF() {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
+      
+      /* Correct the label for education courses (thesis) */
+      ul.courses::before {
+        content: "Thesis: " !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+      }
     </style>
   `;
   html = html.replace('</head>', `${customCSS}</head>`);
