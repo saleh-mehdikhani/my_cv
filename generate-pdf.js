@@ -127,6 +127,35 @@ async function generatePDF() {
       });
     }, resume.projects);
 
+    // Transform DOM: Wrap titles in links and hide redundant URL displays
+    await page.evaluate(() => {
+      // Handle Certificates
+      const certItems = document.querySelectorAll('.certificate-item');
+      certItems.forEach(item => {
+        const urlLink = item.querySelector('.url a');
+        const nameDiv = item.querySelector('.name');
+        if (urlLink && nameDiv) {
+          const url = urlLink.getAttribute('href');
+          nameDiv.innerHTML = `<a href="${url}" target="_blank" style="color: inherit; text-decoration: none;"><span class="fa-solid fa-up-right-from-square" style="font-size: 0.8em; margin-right: 5px; color: #606d76;"></span>${nameDiv.textContent}</a>`;
+          const urlContainer = item.querySelector('.url');
+          if (urlContainer) urlContainer.style.display = 'none';
+        }
+      });
+
+      // Handle Projects
+      const projectItems = document.querySelectorAll('.project-item');
+      projectItems.forEach(item => {
+        const urlLink = item.querySelector('.website a');
+        const positionDiv = item.querySelector('.position'); // Themes uses .position for project name
+        if (urlLink && positionDiv) {
+          const url = urlLink.getAttribute('href');
+          positionDiv.innerHTML = `<a href="${url}" target="_blank" style="color: inherit; text-decoration: none;"><span class="fa-solid fa-up-right-from-square" style="font-size: 0.8em; margin-right: 5px; color: #606d76;"></span>${positionDiv.textContent}</a>`;
+          const urlContainer = item.querySelector('.website');
+          if (urlContainer) urlContainer.style.display = 'none';
+        }
+      });
+    });
+
     await page.pdf({
       path: outputPath,
       format: 'A4',

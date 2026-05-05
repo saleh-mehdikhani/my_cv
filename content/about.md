@@ -82,23 +82,23 @@ Served as a teaching assistant for Verilog programming.
 
 ## Certificates
 
-### Programming with Google Go Specialization
+### [Programming with Google Go Specialization](https://www.coursera.org/account/accomplishments/specialization/CMLNHFJDMX8L)
 **University of California, Irvine**
 *Issued Apr 2024*
 
-### Git: Branches, Merges, and Remotes
+### [Git: Branches, Merges, and Remotes](https://www.linkedin.com/learning/certificates/ed19670eed3caa0750cf4ea02f38336d342cd5b13db69efa3e8afee8b18d6445)
 **LinkedIn**
 *Issued Jan 2021*
 
-### C++: Advanced Topics
+### [C++: Advanced Topics](https://www.linkedin.com/learning/certificates/8c951f93e5452d0e015997923b6e536bcf6082fed73348b0d61b599589c6a877)
 **LinkedIn**
 *Issued Jan 2021*
 
-### C++ Templates and the STL
+### [C++ Templates and the STL](https://www.linkedin.com/learning/certificates/c8455477b3dc7d3b971c8755132ccf9dde6ebc0928a6e2b2f3e60158f49ff747)
 **LinkedIn**
 *Issued Jan 2021*
 
-### Python Data Base
+### [Python Data Base](https://www.coursera.org/account/accomplishments/verify/TL8253UTMANU)
 **University of Michigan**
 *Issued Jan 2021*
 

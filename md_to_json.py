@@ -474,7 +474,14 @@ class MarkdownToJsonConverter:
             if not lines:
                 continue
             
-            name = lines[0]
+            name_line = lines[0]
+            # Extract URL if present in name: ### [Name](URL)
+            url = ""
+            if match := re.search(r'\[([^\]]+)\]\(([^)]+)\)', name_line):
+                name = match.group(1).strip()
+                url = match.group(2).strip()
+            else:
+                name = name_line.strip()
             
             # Parse issuer: **Issuer**
             issuer = ""
@@ -495,7 +502,7 @@ class MarkdownToJsonConverter:
                 "name": name,
                 "issuer": issuer,
                 "date": date,
-                "url": ""
+                "url": url
             })
             
         return certificates
