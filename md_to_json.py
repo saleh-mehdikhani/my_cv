@@ -532,15 +532,6 @@ class MarkdownToJsonConverter:
             "profiles": config_data.get('profiles', [])
         }
 
-        # Add website to profiles with 'wordpress' icon
-        if contact_info.get('website'):
-            website_profile = {
-                "network": "wordpress",
-                "username": contact_info.get('website').split('//')[-1],
-                "url": contact_info.get('website')
-            }
-            self.resume_data["basics"]["profiles"].append(website_profile)
-        
         # Add LinkedIn to profiles if found in contact info
         if contact_info.get('linkedin'):
             linkedin_profile = {
