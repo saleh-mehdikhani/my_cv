@@ -33,10 +33,54 @@ async function generatePDF() {
   let html = theme.render(resume);
   const pdfOptions = theme.pdfRenderOptions || {};
 
-  // Fix paragraphSplit double-wrapping: <p><p>text</p></p> → <p>text</p>
+  // Fix paragraphSplit double-wrapping and invalid wrapping of block elements
+  // 1. Fix nested paragraphs: <p><p>...</p></p> -> <p>...</p>
   html = html.replace(/<p>(<p>[\s\S]*?<\/p>)<\/p>/g, '$1');
+  // 2. Fix block elements wrapped in paragraphs: <p><ul>...</ul></p> -> <ul>...</ul>
+  html = html.replace(/<p>\s*<(ul|ol|li|div|section|header)([\s\S]*?)<\/\1>\s*<\/p>/g, '<$1$2</$1>');
 
-  console.log('✓ HTML rendered from theme');
+  // Inject custom CSS to restore blue backgrounds and fix spacing
+  const customCSS = `
+    <style>
+      /* Restore blue backgrounds and padding in print/PDF */
+      .keywords li, .courses li {
+        background-color: #dfeaf1 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        
+        /* Restore gap (padding) and margin around words */
+        padding: 3px 6px !important;
+        margin: 2px 3px 2px 0 !important;
+        display: inline-block !important;
+        border-radius: 3px !important;
+        font-size: 0.9rem !important;
+      }
+      
+      /* Remove unwanted commas between keywords */
+      .keywords li::after, .courses li::after {
+        content: "" !important;
+        padding: 0 !important;
+      }
+      
+      /* Adjust list spacing to be more compact */
+      .summary ul, .summary ol {
+        margin-top: 0.2em !important;
+        margin-bottom: 0.2em !important;
+      }
+      .summary li {
+        margin-bottom: 2px !important;
+      }
+      
+      /* Ensure section titles keep their color */
+      .section-title {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    </style>
+  `;
+  html = html.replace('</head>', `${customCSS}</head>`);
+
+  console.log('✓ HTML rendered and patched');
 
   // Launch Puppeteer
   const browser = await puppeteer.launch({

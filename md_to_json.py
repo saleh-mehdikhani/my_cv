@@ -276,7 +276,8 @@ class MarkdownToJsonConverter:
             start_date, end_date = self.parse_date(dates)
             
             work_entry = {
-                "name": company,       # JSON Resume schema uses 'name', not 'company'
+                "name": company,       # JSON Resume schema uses 'name'
+                "company": company,    # Some themes (like stackoverflow) use 'company'
                 "position": position,
                 "location": location,
                 "startDate": start_date,
@@ -513,8 +514,8 @@ class MarkdownToJsonConverter:
             "name": config_data.get('name', 'Saleh Mehdikhani'),
             "label": config_data.get('label', 'Senior System Software Developer'),
             "email": contact_info.get('email', ''),
-            "phone": "",
-            "website": "",
+            "phone": contact_info.get('phone', ''),
+            "website": contact_info.get('website', ''),
             "summary": "",
             "location": {
                 "city": contact_info.get('city', ''),
