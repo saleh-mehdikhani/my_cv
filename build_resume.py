@@ -17,6 +17,7 @@ class ResumeBuilder:
         self.build_dir = Path("build")
         self.json_file = self.build_dir / "resume.json"
         self.pdf_file = self.build_dir / "resume.pdf"
+        self.pdf_professional_file = self.build_dir / "resume-professional.pdf"
 
     
     def print_header(self, message: str):
@@ -74,7 +75,7 @@ class ResumeBuilder:
     
     
     def generate_pdf(self):
-        """Generate PDF from JSON Resume"""
+        """Generate PDF from JSON Resume using the Stack Overflow theme"""
         self.print_step(4, "Generating PDF with Stack Overflow theme (via Puppeteer)")
 
         try:
@@ -118,6 +119,47 @@ class ResumeBuilder:
             print(f"✗ Error generating PDF: {e}")
             return False
     
+    def generate_pdf_professional(self):
+        """Generate PDF from JSON Resume using the Professional theme"""
+        self.print_step(4, "Generating PDF with Professional theme (via Puppeteer)")
+
+        try:
+            cmd = ["node", "generate-pdf-professional.js"]
+            print(f"Running: {' '.join(cmd)}")
+
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            if result.stdout:
+                print("--- stdout ---")
+                print(result.stdout)
+            if result.stderr:
+                print("--- stderr ---")
+                print(result.stderr)
+
+            if result.returncode != 0:
+                print(f"✗ Professional PDF generation failed with exit code {result.returncode}")
+                return False
+
+            if not self.pdf_professional_file.exists():
+                print(f"✗ Command appeared to succeed, but PDF file was not created at: {self.pdf_professional_file}")
+                return False
+
+            file_size = self.pdf_professional_file.stat().st_size
+            print(f"✓ Professional PDF generated successfully")
+            print(f"  File: {self.pdf_professional_file}")
+            print(f"  Size: {file_size:,} bytes ({file_size/1024:.1f} KB)")
+
+            return True
+
+        except Exception as e:
+            print(f"✗ Error generating Professional PDF: {e}")
+            return False
+
     def verify_outputs(self):
         """Verify all output files exist"""
         self.print_step(5, "Verifying outputs")
@@ -132,12 +174,20 @@ class ResumeBuilder:
             print(f"✗ JSON Resume not found: {self.json_file}")
             all_good = False
         
-        # Check PDF
+        # Check PDF (Stack Overflow theme)
         if self.pdf_file.exists():
             size = self.pdf_file.stat().st_size
-            print(f"✓ PDF Resume: {self.pdf_file} ({size:,} bytes)")
+            print(f"✓ PDF Resume (stackoverflow): {self.pdf_file} ({size:,} bytes)")
         else:
             print(f"✗ PDF Resume not found: {self.pdf_file}")
+            all_good = False
+
+        # Check PDF (Professional theme)
+        if self.pdf_professional_file.exists():
+            size = self.pdf_professional_file.stat().st_size
+            print(f"✓ PDF Resume (professional): {self.pdf_professional_file} ({size:,} bytes)")
+        else:
+            print(f"✗ Professional PDF Resume not found: {self.pdf_professional_file}")
             all_good = False
         
         return all_good
@@ -156,9 +206,14 @@ class ResumeBuilder:
             return False
         
         
-        # Step 4: Generate PDF
+        # Step 4a: Generate PDF (Stack Overflow theme)
         if not self.generate_pdf():
             print("\n✗ Build failed at PDF generation step")
+            return False
+
+        # Step 4b: Generate PDF (Professional theme)
+        if not self.generate_pdf_professional():
+            print("\n✗ Build failed at Professional PDF generation step")
             return False
         
         # Step 5: Verify outputs
@@ -170,7 +225,8 @@ class ResumeBuilder:
         self.print_header("Build Completed Successfully! 🎉")
         print(f"\nYour resume is ready:")
         print(f"  📄 JSON: {self.json_file}")
-        print(f"  📕 PDF:  {self.pdf_file}")
+        print(f"  📕 PDF (stackoverflow):  {self.pdf_file}")
+        print(f"  📕 PDF (professional):   {self.pdf_professional_file}")
         print(f"\nTo rebuild, simply run: python build_resume.py")
         print("=" * 60 + "\n")
         

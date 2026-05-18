@@ -9,8 +9,8 @@ Senior System Software Developer with 15+ years of experience in embedded system
 ## Skills
 
 - **Languages:** C, C++, Python, Go
-- **Embedded Systems:** Embedded Linux, Zephyr RTOS, FreeRTOS, Low-Power Systems, Real-Time Systems
-- **Connectivity & Protocols:** BLE, WiFi, Zigbee, MQTT, REST, UART, SPI, I2C, CAN, GPIO
+- **Embedded:** Embedded Linux, Zephyr RTOS, FreeRTOS, Low-Power Systems, Real-Time Systems
+- **Connectivity:** BLE, WiFi, Zigbee, MQTT, REST, UART, SPI, I2C, CAN, GPIO
 - **Platforms:** Nordic nRF, Silicon Labs, Espressif, STM32, TI, Atmel, Onsemi
 - **Tools:** Git, CMake, Bazel, SCons, GNU Make, Docker
 - **Hardware Debug:** Oscilloscope, Logic Analyzer, Power Analyzer, PCB debugging

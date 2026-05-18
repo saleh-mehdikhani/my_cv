@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "CV built with Hugo",
   "dependencies": {
+    "@jsonresume/jsonresume-theme-professional": "latest",
+    "jsonresume-theme-stackoverflow": "^2.1.0",
     "puppeteer": "^22.0.0",
-    "jsonresume-theme-stackoverflow": "^2.1.0"
+    "react-dom": "^19.2.6"
   }
 }
